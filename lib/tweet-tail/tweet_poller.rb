@@ -19,9 +19,14 @@ class TweetTail::TweetPoller
     @refresh_url    = @latest_feed["refresh_url"]
   end
   
-  def render_latest_results
+  def render_latest_results(&block)
+    format_block = block unless block.nil?
     @latest_results.inject("") do |output, tweet|
-      output += format(tweet)
+      if block.nil? 
+        output += format(tweet)
+      else
+        output += block.call(tweet)
+      end
     end
   end
 
