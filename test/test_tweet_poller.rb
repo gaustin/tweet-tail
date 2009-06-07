@@ -58,7 +58,7 @@ class TestTweetPoller < Test::Unit::TestCase
     <div class='tweet'>\ntheRMK: Come speak with Matt at JAOO next week<br />\n<a href='http://twitter.com/theRMK/statuses/1666334207'>10:01 PM Apr 30th</a>\n</div>
     <div class='tweet'>\ndrnic: reading my own abstract for JAOO presentation<br />\n<a href='https://twitter.com/drnic/status/1666627310'>10:45 PM Apr 30th</a>\n</div>
     RESULTS
-    actual = @app.render_latest_results(nil) do |tweet|
+    actual = @app.render_latest_results do |tweet|
       screen_name = tweet['from_user']
       created_at = tweet['created_at']
       link = tweet['source']
