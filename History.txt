@@ -1,3 +1,4 @@
+* configurable output format [gaustin]
 * colour highlighting [bcarlso]
 * dependency on json gem
 * explicit development dependencies
