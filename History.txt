@@ -1,4 +1,5 @@
-* configurable output format [gaustin]
+* configurable output format with formatter class [gaustin]
+* configurable output format with optional block [gaustin]
 * colour highlighting [bcarlso]
 * dependency on json gem
 * explicit development dependencies

@@ -48,23 +48,34 @@ class TestTweetPoller < Test::Unit::TestCase
     theRMK: Come speak with Matt at JAOO next week
     drnic: reading my own abstract for JAOO presentation
     RESULTS
-    assert_equal(expected, @app.render_latest_results)
+    assert_equal(expected, @app.render_latest_results(nil))
   end
   
-  def test_message_render_html
+  def test_message_render_html_block
     expected = <<-RESULTS.gsub(/^    /, '')
     <div class='tweet'>\nmattnhodges: Come speak with me at JAOO next week - http://jaoo.dk/<br />\n<a href='http://not.in.google/'>10:01 PM Apr 30th</a>\n</div>
     <div class='tweet'>\nSteve_Hayes: @VenessaP I think they went out for noodles. #jaoo<br />\n<a href='http://not.in.google/'>10:01 PM Apr 30th</a>\n</div>
     <div class='tweet'>\ntheRMK: Come speak with Matt at JAOO next week<br />\n<a href='http://twitter.com/theRMK/statuses/1666334207'>10:01 PM Apr 30th</a>\n</div>
     <div class='tweet'>\ndrnic: reading my own abstract for JAOO presentation<br />\n<a href='https://twitter.com/drnic/status/1666627310'>10:45 PM Apr 30th</a>\n</div>
     RESULTS
-    actual = @app.render_latest_results do |tweet|
+    actual = @app.render_latest_results(nil) do |tweet|
       screen_name = tweet['from_user']
       created_at = tweet['created_at']
       link = tweet['source']
       message = tweet['text']
       "<div class='tweet'>\n#{screen_name}: #{message}<br />\n<a href='#{link}'>#{created_at}</a>\n</div>\n"
     end
+    assert_equal(expected, actual)
+  end
+  
+  def test_message_render_html_formatter
+    expected = <<-RESULTS.gsub(/^    /, '')
+    <div class='tweet'>\nmattnhodges: Come speak with me at JAOO next week - http://jaoo.dk/<br />\n<a href='http://not.in.google/'>10:01 PM Apr 30th</a>\n</div>
+    <div class='tweet'>\nSteve_Hayes: @VenessaP I think they went out for noodles. #jaoo<br />\n<a href='http://not.in.google/'>10:01 PM Apr 30th</a>\n</div>
+    <div class='tweet'>\ntheRMK: Come speak with Matt at JAOO next week<br />\n<a href='http://twitter.com/theRMK/statuses/1666334207'>10:01 PM Apr 30th</a>\n</div>
+    <div class='tweet'>\ndrnic: reading my own abstract for JAOO presentation<br />\n<a href='https://twitter.com/drnic/status/1666627310'>10:45 PM Apr 30th</a>\n</div>
+    RESULTS
+    actual = @app.render_latest_results(TweetTail::HtmlTweetFormatter)
     assert_equal(expected, actual)
   end
   
@@ -87,7 +98,7 @@ class TestTweetPoller < Test::Unit::TestCase
     expected = <<-RESULTS.gsub(/^    /, '')
     CaioProiete: Wish I could be at #JAOO Australia...
     RESULTS
-    assert_equal(expected, @app.render_latest_results)
+    assert_equal(expected, @app.render_latest_results(nil))
     assert_equal('?since_id=1711269079&q=jaoo', @app.refresh_url)
   end
 end
