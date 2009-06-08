@@ -34,7 +34,7 @@ module TweetTail::CLI
       if options[:html]
         stdout.puts app.render_latest_results(TweetTail::HtmlTweetFormatter)
       else
-        stdout.puts app.render_latest_results(nil)
+        stdout.puts app.render_latest_results
       end
       while(options[:polling])
         Kernel::sleep(15)
@@ -43,7 +43,7 @@ module TweetTail::CLI
           if options[:html]
             stdout.puts app.render_latest_results(TweetTail::HtmlTweetFormatter)
           else
-            stdout.puts app.render_latest_results(nil)
+            stdout.puts app.render_latest_results
           end
         end
       end
