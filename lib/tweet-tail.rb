@@ -13,5 +13,3 @@ require "open-uri"
 require "tweet-tail/tweet_poller"
 
 require "tweet-tail/ansi_tweet_formatter"
-
-require "tweet-tail/html_tweet_formatter"
